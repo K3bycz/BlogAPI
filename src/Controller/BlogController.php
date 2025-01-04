@@ -1,19 +1,44 @@
 <?php
-// src/Controller/BlogController.php
+
 namespace App\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; 
+
+use App\Service\BlogPostService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
-    #[Route('/blog')]
+    public function __construct(
+        private BlogPostService $blogPostService
+    ) {}
+
+    #[Route('/', name: 'blog_index')]
     public function index(): Response
     {
-        $number = random_int(0, 100);
+        $posts = $this->blogPostService->getLatestPosts(12); // pokazujemy 12 najnowszych postów
+        $totalPosts = $this->blogPostService->getTotalPosts();
 
-        return new Response(
-            '<html><body>Lucky number: '.$number.'</body></html>'
-        );
+        return $this->render('blog/index.html.twig', [
+            'posts' => $posts,
+            'totalPosts' => $totalPosts
+        ]);
     }
+
+    #[Route('/search', name: 'blog_search')]
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('q', '');
+        $posts = [];
+        
+        if ($query) {
+            $posts = $this->blogPostService->searchByTitle($query);
+        }
+
+        return $this->render('blog/search.html.twig', [
+            'posts' => $posts,
+            'query' => $query
+        ]);
+    }
+    
 }

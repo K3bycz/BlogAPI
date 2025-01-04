@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
-#[ORM\Table(name: "user")]
+#[ORM\Table(name: "users")]
 class User
 {
     #[ORM\Id]
@@ -22,5 +22,5 @@ class User
     #[ORM\Column(type: 'string', length: 50, unique: true)]
     private $email;
 
-    // gettery i settery
+    // Getters and setters
 }

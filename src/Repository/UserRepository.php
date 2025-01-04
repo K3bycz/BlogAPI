@@ -13,11 +13,10 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // Użyj wbudowanej metody findAll() z ServiceEntityRepository
     public function findAllUsers(): array
     {
         return $this->createQueryBuilder('u')
-        ->select('u.name')
+        ->select('u.id, u.name, u.surname, u.email')
         ->getQuery()
         ->getResult();
     }
