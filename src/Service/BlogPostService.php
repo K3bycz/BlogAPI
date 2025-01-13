@@ -13,6 +13,7 @@ class BlogPostService
         private BlogPostRepository $blogPostRepository
     ) {}
 
+    //pobieranie postów/blogów z bazy
     public function getAllPosts(): array
     {
         return $this->blogPostRepository->findAll();
@@ -23,6 +24,12 @@ class BlogPostService
         return $this->blogPostRepository->find($id);
     }
 
+    public function getLatestPosts(int $limit = 10): array
+    {
+        return $this->blogPostRepository->findLatestPosts($limit);
+    }
+
+    //tworzenie posta
     public function createPost(string $title, string $content, ?string $imageUrl = null): BlogPost
     {
         $post = new BlogPost();
@@ -36,18 +43,4 @@ class BlogPostService
         return $post;
     }
 
-    public function getLatestPosts(int $limit = 10): array
-    {
-        return $this->blogPostRepository->findLatestPosts($limit);
-    }
-
-    public function searchByTitle(string $title): array
-    {
-        return $this->blogPostRepository->findByTitle($title);
-    }
-
-    public function getTotalPosts(): int
-    {
-        return $this->blogPostRepository->countPosts();
-    }
 }

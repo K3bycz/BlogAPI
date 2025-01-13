@@ -13,31 +13,14 @@ class BlogController extends AbstractController
         private BlogPostService $blogPostService
     ) {}
 
+    //metoda do dashboardu, 10 najnowszych postów/blogów
     #[Route('/', name: 'blog_index')]
     public function index(): Response
     {
-        $posts = $this->blogPostService->getLatestPosts(12); // pokazujemy 12 najnowszych postów
-        $totalPosts = $this->blogPostService->getTotalPosts();
+        $posts = $this->blogPostService->getLatestPosts(10); // pokazujemy 12 najnowszych postów
 
         return $this->render('blog/index.html.twig', [
             'posts' => $posts,
-            'totalPosts' => $totalPosts
-        ]);
-    }
-
-    #[Route('/search', name: 'blog_search')]
-    public function search(Request $request): Response
-    {
-        $query = $request->query->get('q', '');
-        $posts = [];
-        
-        if ($query) {
-            $posts = $this->blogPostService->searchByTitle($query);
-        }
-
-        return $this->render('blog/search.html.twig', [
-            'posts' => $posts,
-            'query' => $query
         ]);
     }
     
