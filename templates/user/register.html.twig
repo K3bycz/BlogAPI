@@ -1,0 +1,20 @@
+{# templates/auth/register.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Rejestracja</h1>
+
+    <p>{{ form_start(registrationForm) }}</p>
+    <p>{{ form_row(registrationForm.name) }}</p>
+    <p>{{ form_row(registrationForm.surname) }}</p>
+    <p>{{ form_row(registrationForm.email) }}</p>
+    <p>{{ form_row(registrationForm.plainPassword) }}</p>
+
+    <button class="btn">Zarejestruj się</button>
+    {{ form_end(registrationForm) }}
+
+    <p style="margin-top: 30px">Masz już konto? <a href="/login" style="color:blue">Zaloguj się</a></p>
+{% endblock %}

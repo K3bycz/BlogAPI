@@ -2,15 +2,26 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
+use App\Entity\Group;
 use App\Entity\BlogPost;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        
+
         // Blog testowy 1
         $blog1 = new BlogPost();
         $blog1->setTitle('Lorem ipsum');
@@ -26,6 +37,37 @@ class AppFixtures extends Fixture
         $blog2->setImageUrl('https://images.theconversation.com/files/625056/original/file-20241010-19-5h51ab.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=754&h=503&fit=crop&dpr=1');
 
         $manager->persist($blog2);
+
+        // Tworzenie grup
+        $groupAdmin = new Group('Admin'); 
+        $manager->persist($groupAdmin);
+
+        $groupUser = new Group('User');
+        $manager->persist($groupUser);
+
+        // Tworzenie użytkownika
+        $user = new User();
+        $user->setName('John')
+            ->setSurname('Doe')
+            ->setEmail('john.doe@user.pl');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'user123');
+        $user->setPassword($hashedPassword);
+
+        $user->addGroup($groupUser);
+        $manager->persist($user);
+
+        // Tworzenie admina
+        $user = new User();
+        $user->setName('Admin')
+            ->setSurname('Admin')
+            ->setEmail('admin@admin.pl');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'admin123');
+        $user->setPassword($hashedPassword);
+
+        $user->addGroup($groupAdmin);
+        $manager->persist($user);
 
         $manager->flush();
     }
