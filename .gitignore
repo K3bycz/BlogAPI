@@ -1,8 +1,12 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env
+/.env.test
+/.env.dev
+/phpunit.xml
+/phpunit.xml.dist
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -18,3 +22,11 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# Logs and caches
+/logs/
+/.cache/
+/var/cache/
+/var/log/
+/var/sessions/
+/dev.log
