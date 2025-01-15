@@ -69,15 +69,11 @@ class UserController extends AbstractController
                 $usersGroup = new Group('users');
                 $entityManager->persist($usersGroup);
             }
-
-            // Przypisanie użytkownika do grupy
             $user->addGroup($usersGroup);
             
-            // Zapisanie użytkownika
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Przekierowanie po rejestracji
             return $this->redirectToRoute('user_login');
         }
 

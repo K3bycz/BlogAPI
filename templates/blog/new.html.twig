@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj bloga{% endblock %}
+{% block body %}
+    <h1>Dodaj nowy post</h1>
+    {{ form_start(blogPostForm) }}
+        {{ form_widget(blogPostForm) }}
+        <button class="btn" type="submit">Dodaj posta</button>
+    {{ form_end(blogPostForm) }}
+{% endblock %}
