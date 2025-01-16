@@ -7,8 +7,6 @@ use App\Entity\BlogPost;
 class BlogPostFormatter
 {
     /**
-     * Formatowanie obiektu BlogPost do tablicy asocjacyjnej
-     *
      * @param BlogPost $blogPost
      * @return array
      */
@@ -24,8 +22,6 @@ class BlogPostFormatter
     }
 
     /**
-     * Formatowanie kolekcji BlogPost do tablicy
-     *
      * @param iterable $blogPosts
      * @return array
      */

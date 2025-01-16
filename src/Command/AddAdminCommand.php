@@ -55,6 +55,16 @@ class AddAdminCommand extends Command
 
         // Dodawanie użytkownika do grupy Adminów
         $user->addGroup($adminGroup);
+
+        $roles = $user->getRoles();
+        if (!in_array('ROLE_ADMIN', $roles)) {
+            $roles[] = 'ROLE_ADMIN';
+            $user->setRoles($roles);
+            $output->writeln('<info>Dodano rolę ROLE_ADMIN użytkownikowi.</info>');
+        } else {
+            $output->writeln('<comment>Użytkownik już posiada rolę ROLE_ADMIN.</comment>');
+        }
+        
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

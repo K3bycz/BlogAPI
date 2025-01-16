@@ -67,6 +67,9 @@ class AppFixtures extends Fixture
         $user->setPassword($hashedPassword);
 
         $user->addGroup($groupAdmin);
+        $roles = $user->getRoles(); 
+        $roles[] = 'ROLE_ADMIN'; 
+        $user->setRoles(array_unique($roles));
         $manager->persist($user);
 
         $manager->flush();

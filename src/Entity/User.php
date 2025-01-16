@@ -41,8 +41,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        $roles = ['ROLE_USER'];
+    
+        foreach ($this->getGroups() as $group) {
+            if ($group->getName() === 'Admin') {
+                $roles[] = 'ROLE_ADMIN';
+            }
+        }
+    
+        return array_unique($roles);
     }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = array_unique($roles);
+        return $this;
+    }
+
 
     public function eraseCredentials(): void
     {
