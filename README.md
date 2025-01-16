@@ -59,29 +59,16 @@ The application will be available at http://localhost:8080
 
 You can test the API endpoints by clicking the button below to run the collection in Postman:
 
-<div class="postman-run-button"
-    data-postman-action="collection/fork"
-    data-postman-visibility="public"
-    data-postman-var-1="32708062-01c895ce-0d7d-42ff-b8a6-f421c3c323d5"
-    data-postman-collection-url="entityId=32708062-01c895ce-0d7d-42ff-b8a6-f421c3c323d5&entityType=collection&workspaceId=12f60be8-d681-43c6-b630-cc0451a2b8ee"></div>
-<script type="text/javascript">
-  (function (p,o,s,t,m,a,n) {
-    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
-    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
-      (n = o.createElement("script")),
-      (n.id = s+t), (n.async = 1), (n.src = m), n
-    ));
-  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
-</script>
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/32708062-01c895ce-0d7d-42ff-b8a6-f421c3c323d5?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D32708062-01c895ce-0d7d-42ff-b8a6-f421c3c323d5%26entityType%3Dcollection%26workspaceId%3D12f60be8-d681-43c6-b630-cc0451a2b8ee)
 
 ## Available Endpoints
 
 Here are some of the available API endpoints:
 
-POST /api/login_check - Login and get a JWT token
-GET /api/blog/posts - Get all blog posts
-GET /api/users - Get information about users in the system
-POST /api/blog/create - Create a new blog post
-DELETE /api/blog/delete/{id} - Delete a blog post
+- POST /api/login_check - Login and get a JWT token
+- GET /api/blog/posts - Get all blog posts
+- GET /api/users - Get information about users in the system
+- POST /api/blog/create - Create a new blog post
+- DELETE /api/blog/delete/{id} - Delete a blog post
 
 Enjoy!
