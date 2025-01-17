@@ -55,6 +55,15 @@ docker compose up -d
 ```
 The application will be available at http://localhost:8080
 
+### 7. Run PHPUnit Tests
+
+After setting up the application, it's a good idea to run the PHPUnit tests to ensure everything is working properly. To do this, execute the following command:
+
+```
+php vendor/bin/phpunit
+```
+This will run all the test cases defined in the tests directory. If everything is set up correctly, the tests should pass. If any tests fail, check the error messages for more details on what might be causing the issue.
+
 ## API Documentation
 
 You can test the API endpoints by clicking the button below to run the collection in Postman:

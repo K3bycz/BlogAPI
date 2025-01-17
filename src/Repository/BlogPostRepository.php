@@ -25,24 +25,4 @@ class BlogPostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return BlogPost[]
-     */
-    // public function findByTitle(string $title): array
-    // {
-    //     return $this->createQueryBuilder('b')
-    //         ->andWhere('LOWER(b.title) LIKE LOWER(:title)')
-    //         ->setParameter('title', '%' . $title . '%')
-    //         ->orderBy('b.createdAt', 'DESC')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-
-    // public function countPosts(): int
-    // {
-    //     return $this->createQueryBuilder('b')
-    //         ->select('COUNT(b.id)')
-    //         ->getQuery()
-    //         ->getSingleScalarResult();
-    // }
 }

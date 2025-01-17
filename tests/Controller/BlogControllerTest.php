@@ -28,17 +28,16 @@ class BlogControllerTest extends TestCase
     private ContainerInterface $container;
     private FormFactoryInterface $formFactory;
     private UrlGeneratorInterface $urlGenerator;
+    private $entityManager;
+    private $request;
 
     protected function setUp(): void
     {
         $this->blogPostService = $this->createMock(BlogPostService::class);
-        
         $this->twig = $this->createMock(Environment::class);
-        
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
         $this->formFactory = $this->createMock(FormFactoryInterface::class);
-        
         $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
-        
         $this->container = $this->createMock(ContainerInterface::class);
         $this->container
             ->method('has')
@@ -154,4 +153,51 @@ class BlogControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
+    //Próba tworzenia posta przez użytkownika bez uprawnień - test4
+    public function testCreateBlogUnauthorizedUser(): void
+    {
+        $blogPostServiceMock = $this->createMock(BlogPostService::class);
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+    
+        $this->request = $this->createMock(Request::class);
+    
+        $containerMock = $this->createMock(ContainerInterface::class);
+        $containerMock
+            ->method('get')
+            ->willReturnCallback(function ($id) {
+                if ($id === 'security.helper') {
+                    return $this->createMock(\Symfony\Component\Security\Core\Security::class);
+                }
+                return null;
+            });
+    
+        $customController = new class($blogPostServiceMock, $entityManagerMock) extends BlogController {
+            private $mockUser;
+    
+            public function setMockUser(User $user): void
+            {
+                $this->mockUser = $user;
+            }
+    
+            protected function getUser(): ?User
+            {
+                return $this->mockUser;
+            }
+        };
+    
+        $customController->setContainer($containerMock);
+    
+        // Użytkownik bez przynależności do grupy Admin
+        $user = $this->createMock(User::class);
+        $user->method('getGroups')->willReturn(new ArrayCollection());
+        $customController->setMockUser($user);
+    
+        $response = $customController->createBlog($this->request, $entityManagerMock);
+    
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $this->assertStringContainsString(
+            'Dostęp zabroniony - nie masz uprawnień na dodawanie postów',
+            json_decode($response->getContent(), true)['error']
+        );
+    }
 }
